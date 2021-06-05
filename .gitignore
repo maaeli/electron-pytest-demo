@@ -103,6 +103,13 @@ dist
 # TernJS port file
 .tern-port
 
+# Python 
+.mypy_cache/
+selenium-test/demo
+
+# binaries
+selenium-test/chromedriver
+
 # OS stuff
 .DS_Store
 
