@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# OS stuff
+../.DS_Store
+
+# IDE
+workspace.code-workspace
+
+# diverse
+../screenshots/
