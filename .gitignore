@@ -104,10 +104,10 @@ dist
 .tern-port
 
 # OS stuff
-../.DS_Store
+.DS_Store
 
 # IDE
 workspace.code-workspace
 
 # diverse
-../screenshots/
+screenshots/
