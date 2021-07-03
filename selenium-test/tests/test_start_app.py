@@ -50,22 +50,21 @@ else:
     raise Exception("No package location known for " + platform.system())
 
 
-def test_start_app():
+@pytest.fixture
+def app():
     options = webdriver.ChromeOptions()
     options.binary_location = str(electron_application_path)
     chrome_driver = webdriver.Chrome(chrome_driver_path, options=options)
-    sleep(1)
-    body = chrome_driver.find_element_by_tag_name("body")
-    assert "💖 Hello World!" in body.text
+    yield chrome_driver
     chrome_driver.quit()
+
+
+def test_start_app(app):
+    body = app.find_element_by_tag_name("body")
+    assert "💖 Hello World!" in body.text
 
 
 @pytest.mark.xfail
-def test_hello_maaeli():
-    options = webdriver.ChromeOptions()
-    options.binary_location = str(electron_application_path)
-    chrome_driver = webdriver.Chrome(chrome_driver_path, options=options)
-    sleep(1)
-    body = chrome_driver.find_element_by_tag_name("body")
+def test_hello_maaeli(app):
+    body = app.find_element_by_tag_name("body")
     assert "💖 Hello Maaeli!" in body.text
-    chrome_driver.quit()
