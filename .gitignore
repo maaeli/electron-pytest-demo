@@ -103,8 +103,11 @@ dist
 # TernJS port file
 .tern-port
 
-# Python 
+# Python Caches
 .mypy_cache/
+**/__pycache__
+
+# Python venv
 selenium-test/demo
 
 # binaries
