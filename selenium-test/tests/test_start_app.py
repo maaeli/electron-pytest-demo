@@ -1,6 +1,5 @@
 import platform
 from pathlib import PurePath
-from time import sleep
 import pytest
 from selenium import webdriver
 
