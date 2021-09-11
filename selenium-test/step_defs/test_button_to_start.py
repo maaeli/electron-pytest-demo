@@ -2,7 +2,7 @@ import platform
 from pathlib import PurePath
 from selenium import webdriver
 import pytest
-from pytest_bdd import scenarios, given, when, then
+from pytest_bdd import scenarios, given, when, then, parsers
 
 this_file_as_path = PurePath(__file__)
 
@@ -72,7 +72,7 @@ def click_button(app):
     button.click()
 
 
-@then("the text 'Hello World' will be displayed")
-def check_text_displayed(app):
+@then(parsers.parse("the text '{my_text}' will be displayed"))
+def check_text_displayed(app, my_text):
     body = app.find_element_by_tag_name("body")
-    assert "Hello World!" in body.text
+    assert my_text in body.text
