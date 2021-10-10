@@ -4,6 +4,7 @@ from selenium import webdriver
 import pytest
 from pytest_bdd import scenarios, given, when, then, parsers
 
+
 this_file_as_path = PurePath(__file__)
 
 if platform.system() == "Darwin":
@@ -67,11 +68,19 @@ def enter_app(app):
     button.click()
 
 
+@given(parsers.parse("I have entered '{my_name}' in the input field"))
+@when(parsers.parse("I enter '{my_name}' in the input field"))
 @when("I enter <my_name> in the input field")
 def click_button(app, my_name):
+    if platform.system() == "Darwin":
+        select_all = webdriver.common.keys.Keys.COMMAND + "a"
+    else:
+        select_all = webdriver.common.keys.Keys.CONTROL + "a"
+    app.find_element_by_id("input-name").send_keys(select_all)
     app.find_element_by_id("input-name").send_keys(my_name)
 
 
+@then(parsers.parse("the text 'Hello {my_name}' will be displayed"))
 @then("the text 'Hello <my_name>' will be displayed")
 def check_text_displayed(app, my_name):
     my_text = f"Hello {my_name}"

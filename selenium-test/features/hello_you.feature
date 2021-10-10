@@ -8,3 +8,9 @@ Scenario Outline: Enter name to be welcomed
         | maaeli |
         | マエリ |
         | 마에리 | 
+
+Scenario: Welcome a second time
+    Given I have entered the app
+    And  I have entered 'maaeli' in the input field
+    When I enter '마에리' in the input field
+    Then the text 'Hello 마에리' will be displayed
