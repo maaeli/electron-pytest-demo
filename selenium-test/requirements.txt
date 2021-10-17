@@ -1,4 +1,4 @@
 wheel
-selenium
+selenium==4
 pytest
 pytest-bdd

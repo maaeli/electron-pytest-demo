@@ -1,6 +1,7 @@
 import platform
 from pathlib import PurePath
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import pytest
 from pytest_bdd import scenarios, given, when, then, parsers
 
@@ -51,11 +52,17 @@ else:
 
 @pytest.fixture
 def app():
+    chrome_service = webdriver.chrome.service.Service(chrome_driver_path)
+    chrome_service.start()
+
     options = webdriver.ChromeOptions()
     options.binary_location = str(electron_application_path)
-    chrome_driver = webdriver.Chrome(chrome_driver_path, options=options)
+    chrome_driver = webdriver.Remote(
+        command_executor=chrome_service.service_url, options=options
+    )
     yield chrome_driver
     chrome_driver.quit()
+    chrome_service.stop()
 
 
 scenarios("../features/button_to_start.feature")
@@ -68,11 +75,11 @@ def start_app(app):
 
 @when("I click on the button 'Click me'")
 def click_button(app):
-    button = app.find_element_by_xpath("//button[text()='Click me']")
+    button = app.find_element(By.XPATH, "//button[text()='Click me']")
     button.click()
 
 
 @then(parsers.parse("the text '{my_text}' will be displayed"))
 def check_text_displayed(app, my_text):
-    body = app.find_element_by_tag_name("body")
+    body = app.find_element(By.TAG_NAME, "body")
     assert my_text in body.text
